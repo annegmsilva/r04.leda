@@ -17,7 +17,21 @@ public class CountingSort extends AbstractSorting<Integer> {
 
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		for (int i = 1; i <= rightIndex; i ++) {
+		Integer maior = array[leftIndex];
+		for (int i = 0; i <= rightIndex; i ++) {
+			if (array[i].compareTo(maior) > 0) {
+				maior = array[i];
+			}
+		}
+		Integer[] count = new Integer[maior];
+
+		for (int i = leftIndex; i <= rightIndex; i ++) {
+			count[array[i] - 1] += 1;
+		}
+		for (int  j = leftIndex + 1; j <= maior; j ++) {
+			count[j] = count[j] + count[j - 1];
+		}
+		for (int k = rightIndex; k <= leftIndex; k --) {
 			
 		}
 	}
