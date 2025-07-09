@@ -17,24 +17,25 @@ public class CountingSort extends AbstractSorting<Integer> {
 
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		Integer maior = array[leftIndex];
-		for (int i = 0; i <= rightIndex; i ++) {
-			if (array[i].compareTo(maior) > 0) {
-				maior = array[i];
+		if (rightIndex < array.length && leftIndex >= 0) {
+			Integer maior = array[leftIndex];
+			for (int i = 0; i <= rightIndex; i ++) {
+				if (array[i].compareTo(maior) > 0) {
+					maior = array[i];
+				}
+			}
+			Integer[] count = new Integer[maior];
+			Integer[] result = new Integer[rightIndex - leftIndex + 1];
+			for (int i = leftIndex; i <= rightIndex; i ++) {
+				count[array[i] - 1] += 1;
+			}
+			for (int  j = leftIndex + 1; j <= maior; j ++) {
+				count[j] = count[j] + count[j - 1];
+			}
+			for (int k = rightIndex; k <= leftIndex; k --) {
+				result[count[array[k]]] = array[k];
+				count[array[k]] = count[array[k]] - 1;
 			}
 		}
-		Integer[] count = new Integer[maior];
-		Integer[] result = new Integer[rightIndex - leftIndex + 1];
-		for (int i = leftIndex; i <= rightIndex; i ++) {
-			count[array[i] - 1] += 1;
-		}
-		for (int  j = leftIndex + 1; j <= maior; j ++) {
-			count[j] = count[j] + count[j - 1];
-		}
-		for (int k = rightIndex; k <= leftIndex; k --) {
-			result[count[array[k]]] = array[k];
-			count[array[k]] = count[array[k]] - 1;
-		}
 	}
-
 }
