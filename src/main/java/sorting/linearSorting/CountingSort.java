@@ -24,7 +24,7 @@ public class CountingSort extends AbstractSorting<Integer> {
 			}
 		}
 		Integer[] count = new Integer[maior];
-
+		Integer[] result = new Integer[rightIndex - leftIndex + 1];
 		for (int i = leftIndex; i <= rightIndex; i ++) {
 			count[array[i] - 1] += 1;
 		}
@@ -32,7 +32,8 @@ public class CountingSort extends AbstractSorting<Integer> {
 			count[j] = count[j] + count[j - 1];
 		}
 		for (int k = rightIndex; k <= leftIndex; k --) {
-			
+			result[count[array[k]]] = array[k];
+			count[array[k]] = count[array[k]] - 1;
 		}
 	}
 
