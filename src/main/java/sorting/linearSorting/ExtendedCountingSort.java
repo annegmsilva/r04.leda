@@ -1,5 +1,7 @@
 package sorting.linearSorting;
 
+import java.util.Arrays;
+
 import sorting.AbstractSorting;
 
 /**
@@ -12,8 +14,35 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (rightIndex < array.length && leftIndex >= 0 && array.length > 0) {
+			Integer maior = array[leftIndex];
+			Integer menor = array[leftIndex];
+			for (int i = leftIndex; i <= rightIndex; i ++) {
+				if (array[i].compareTo(maior) > 0) {
+					maior = array[i];
+				}
+				if (array[i].compareTo(maior) < 0) {
+					menor = array[i];
+				}
+			}
+			Integer[] count = new Integer[maior - menor + 1];
+			Arrays.fill(count, 0);
+			Integer[] result = new Integer[rightIndex - leftIndex + 1];
+			for (int i = leftIndex; i <= rightIndex; i ++) {
+				count[array[i] + menor] ++;
+			}
+			for (int j = 1; j <= maior; j ++) {
+				count[j] += count[j - 1];
+			}
+			for (int k = rightIndex; k >= leftIndex; k --) {
+				result[count[array[k] + menor] - 1] = array[k];
+				count[array[k]] -=1 ;
+			}
+			for (int i = leftIndex; i <= rightIndex; i ++) {
+				array[i] = result[i];
+			}
+		}
+		// mudar testes para os casos negativos e extremos
 	}
 
 }

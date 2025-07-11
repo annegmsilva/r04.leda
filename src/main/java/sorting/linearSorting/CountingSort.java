@@ -28,18 +28,18 @@ public class CountingSort extends AbstractSorting<Integer> {
 			}
 			Integer[] count = new Integer[maior + 1];
 			Arrays.fill(count, 0);
-			Integer[] result = new Integer[array.length];
+			Integer[] result = new Integer[rightIndex - leftIndex + 1];
 			for (int i = leftIndex; i <= rightIndex; i ++) {
 				count[array[i]] ++;
 			}
-			for (int j = 1; j < maior; j ++) {
+			for (int j = 1; j <= maior; j ++) {
 				count[j] += count[j - 1];
 			}
 			for (int k = rightIndex; k >= leftIndex; k --) {
 				result[count[array[k]] - 1] = array[k];
 				count[array[k]] -=1 ;
 			}
-			for (int i = 0; i < array.length; i ++) {
+			for (int i = leftIndex; i <= rightIndex; i ++) {
 				array[i] = result[i];
 			}
 		}
