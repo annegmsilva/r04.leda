@@ -12,6 +12,7 @@ import sorting.AbstractSorting;
  */
 public class ExtendedCountingSort extends AbstractSorting<Integer> {
 
+	//versao final
 	@Override
 	public void sort(Integer[] array, int leftIndex, int rightIndex) {
 		if (rightIndex < array.length && leftIndex >= 0 && array.length > 0) {
@@ -21,7 +22,7 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 				if (array[i].compareTo(maior) > 0) {
 					maior = array[i];
 				}
-				if (array[i].compareTo(maior) < 0) {
+				if (array[i].compareTo(menor) < 0) {
 					menor = array[i];
 				}
 			}
@@ -29,20 +30,19 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 			Arrays.fill(count, 0);
 			Integer[] result = new Integer[rightIndex - leftIndex + 1];
 			for (int i = leftIndex; i <= rightIndex; i ++) {
-				count[array[i] + menor] ++;
+				count[array[i] - menor] ++;
 			}
-			for (int j = 1; j <= maior; j ++) {
+			for (int j = 1; j < count.length; j ++) {
 				count[j] += count[j - 1];
 			}
 			for (int k = rightIndex; k >= leftIndex; k --) {
-				result[count[array[k] + menor] - 1] = array[k];
-				count[array[k]] -=1 ;
+				result[count[array[k] - menor] - 1] = array[k];
+				count[array[k] - menor] -=1 ;
 			}
 			for (int i = leftIndex; i <= rightIndex; i ++) {
 				array[i] = result[i];
 			}
 		}
-		// mudar testes para os casos negativos e extremos
 	}
 
 }
